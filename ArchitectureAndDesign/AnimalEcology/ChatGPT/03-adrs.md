@@ -1,7 +1,3 @@
-
----
-
-```markdown
 # Architecture Decision Records (ADRs)
 
 ## ADR-001 — Edge-centric pipeline with cloud orchestration

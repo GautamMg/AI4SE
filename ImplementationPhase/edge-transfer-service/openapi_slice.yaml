@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  title: Edge TransferModule API
+  version: "1.0.0"
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /api/v1/missions/{mission_id}/scan-and-batch:
+    post:
+      summary: Scan mission folder and create batches
+      operationId: scanAndBatch
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: mission_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanAndBatchRequest'
+      responses:
+        '200':
+          description: Batches created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanAndBatchResponse'
+  /api/v1/batches/{batch_id}/upload:
+    post:
+      summary: Upload a batch to HPC via Tapis
+      operationId: uploadBatch
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: batch_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadBatchRequest'
+      responses:
+        '200':
+          description: Upload completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadBatchResponse'
+        '502':
+          description: Upload failed
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    ScanAndBatchRequest:
+      type: object
+      required: [root_path]
+      properties:
+        root_path:
+          type: string
+          maxLength: 256
+        max_files_per_batch:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 50
+        max_batch_bytes:
+          type: integer
+          minimum: 1000000
+          maximum: 2000000000
+          default: 52428800
+    BatchInfo:
+      type: object
+      properties:
+        batch_id:
+          type: integer
+        mission_id:
+          type: string
+        file_count:
+          type: integer
+        total_bytes:
+          type: integer
+        status:
+          type: string
+    ScanAndBatchResponse:
+      type: object
+      properties:
+        mission_id:
+          type: string
+        batches:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchInfo'
+    UploadBatchRequest:
+      type: object
+      properties:
+        session_key:
+          type: string
+          nullable: true
+    UploadBatchResponse:
+      type: object
+      properties:
+        batch_id:
+          type: integer
+        session_key:
+          type: string
+        status:
+          type: string
+        remote_path:
+          type: string
+          nullable: true
+        retry_count:
+          type: integer

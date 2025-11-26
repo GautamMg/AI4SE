@@ -1,0 +1,155 @@
+openapi: 3.1.0
+info:
+  title: AO-OCT Analytics Engine API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /health:
+    get:
+      tags: [ops]
+      summary: Health check for AO-OCT Analytics Engine
+      operationId: health
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/v1/eng/runs:
+    post:
+      tags: ["Analytics Engine"]
+      summary: Create AO-OCT B-scan run (ingest + inference + visualization)
+      operationId: createEngRun
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [bscan_image, model_name]
+              properties:
+                bscan_image:
+                  type: string
+                  format: binary
+                model_name:
+                  type: string
+                model_version:
+                  type: string
+                  nullable: true
+                confidence_threshold:
+                  type: number
+                  format: float
+                  default: 0.7
+      responses:
+        "201":
+          description: Run created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EngRunResponse"
+        "400":
+          description: Invalid image or parameters
+        "401":
+          description: Unauthorized
+        "413":
+          description: Payload too large
+        "500":
+          description: Internal error
+  /api/v1/eng/runs/{run_id}:
+    get:
+      tags: ["Analytics Engine"]
+      summary: Get AO-OCT B-scan run status and outputs
+      operationId: getEngRun
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: run_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Run found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EngRunResponse"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Run not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    EngRunStatus:
+      type: string
+      enum: ["PENDING", "PROCESSING", "SUCCEEDED", "FAILED"]
+    EngRunResponse:
+      type: object
+      required:
+        - run_id
+        - status
+        - model_name
+        - confidence_threshold
+        - created_at
+        - updated_at
+        - dip_columns
+        - dip_count
+      properties:
+        run_id:
+          type: string
+        status:
+          $ref: "#/components/schemas/EngRunStatus"
+        model_name:
+          type: string
+        model_version:
+          type: string
+          nullable: true
+        confidence_threshold:
+          type: number
+          format: float
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        overlay_image_uri:
+          type: string
+          nullable: true
+        metrics_csv_uri:
+          type: string
+          nullable: true
+        metrics_json_uri:
+          type: string
+          nullable: true
+        manifest_uri:
+          type: string
+          nullable: true
+        dip_columns:
+          type: array
+          items:
+            type: integer
+        dip_count:
+          type: integer
+

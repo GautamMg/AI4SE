@@ -1,7 +1,7 @@
 # Inception Phase Summary
 
 This folder contains the inception-phase report for our AI4SE study.  
-The document outlines how the team will evaluate AI tools across the software development lifecycle—requirements, architecture, implementation, testing, documentation, and project management—using a shared measurement framework applied to three domains: Animal Ecology, AO-OCT retinal imaging, and Digital Agriculture. :contentReference[oaicite:0]{index=0}
+The document outlines how the team will evaluate AI tools across the software development lifecycle—requirements, architecture, implementation, testing, documentation, and project management—using a shared measurement framework applied to three research projects: Animal Ecology, AO-OCT retinal imaging, and Digital Agriculture.
 
 The report also defines success metrics, human-vs-automation guardrails, a 3-phase work plan, and key risks such as tool instability, privacy concerns, and over-dependence on AI.
 

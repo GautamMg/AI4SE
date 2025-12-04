@@ -1,132 +1,66 @@
-# Software Requirements Specification (SRS)
+# Requirements Analysis Phase – Summary
 
-## 1. Document Control
+This folder contains the **Requirements Analysis Report** for our AI4SE study.  
+In this phase, we systematically explored how different AI tools can assist with core requirements artifacts—primarily **Software Requirements Specifications (SRS)** and **user stories**—across three domains: **Animal Ecology**, **AO-OCT**, and **Digital Agriculture**. :contentReference[oaicite:0]{index=0}  
 
-- **Title**: SRS – Aerial Data Collection & Transfer Automation System  
-- **Version**: 1.0  
-- **Date**: October 19, 2025  
-- **Author**: ChatGPT, on behalf of Harikesh Byrandurga Gopinath  
+The report describes how a common project context and carefully structured prompts were used across tools (ChatGPT 4o, Gemini 2.5 Flash, Perplexity Comet, Claude Sonnet 4.5) to generate these artifacts, and how the results were evaluated against industry-aligned frameworks:
 
----
+- **SRS**: assessed on completeness, correctness, unambiguity, consistency, verifiability, and understandability, with structure aligned to IEEE-style SRS. :contentReference[oaicite:1]{index=1}  
+- **User stories**: assessed against the **INVEST** criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable). :contentReference[oaicite:2]{index=2}  
 
-## 2. Introduction
+Overall, the report finds that all tools can produce structured, usable first drafts, but differ in depth, clarity, and testability. Claude tends to be the most comprehensive (especially on assumptions and validation), Gemini is concise but lighter on non-functional and security details, while ChatGPT and Perplexity often produce similar, developer-friendly layouts that still need sharpening around metrics and edge cases. :contentReference[oaicite:3]{index=3}  
 
-### 2.1 Purpose
-
-This document defines the functional and non-functional requirements for a system that automates aerial data collection using Parrot Anafi drones and streamlines the transfer of captured imagery from field devices to high-performance computing (HPC) environments. The goal is to minimize manual intervention, ensure efficient mission planning, and trigger downstream ML workflows automatically and reliably.
-
-### 2.2 Scope
-
-The system comprises two main components:
-
-- **Path Planner Module**: Generates optimized waypoint grids for drone missions based on user-defined field dimensions and drone/camera configurations.  
-- **Transfer Module**: Monitors the mission image folder, batches and uploads images asynchronously to an HPC system (e.g., OSC via Tapis), and initiates training or inference jobs.
-
-The solution is intended for use in edge environments (e.g., agricultural fields) with limited computing resources and unreliable network connectivity.
-
-### 2.3 Definitions, Acronyms, and Abbreviations
-
-| Term        | Description                                                      |
-|------------|------------------------------------------------------------------|
-| HPC        | High Performance Computing                                       |
-| Tapis      | API platform for remote job execution and data movement          |
-| OSC        | Ohio Supercomputer Center                                       |
-| Edge Device| Lightweight compute node deployed in the field (e.g., laptop or Intel NUC) |
-| Waypoint   | GPS coordinate that a drone follows during a flight mission      |
-| OpenPass   | Open-source drone mission controller used with Parrot Anafi      |
-| Anafi      | A lightweight quadcopter drone by Parrot, used for aerial image capture |
+For user stories, ChatGPT and Claude usually produce clearer, outcome-focused stories; Gemini and Perplexity sometimes combine multiple goals or add fixed details that reduce negotiability. Across tools, stories are generally estimable and small, but many would benefit from more explicit user value statements and crisper acceptance criteria. :contentReference[oaicite:4]{index=4}  
 
 ---
 
-## 3. Overall Description
+## Overview Diagram (Artifacts, Domains, Evaluation)
 
-### 3.1 Product Perspective
+```mermaid
+flowchart TD
 
-The system is part of a larger field sensing and cloud pipeline architecture, facilitating:
+%% MAIN NODE
+A([**📄 Requirements Analysis Report**])
 
-- Efficient **pre-flight mission planning**  
-- **Real-time monitoring** of image generation  
-- **Reliable image transfer** to remote servers (e.g., OSC)  
-- **Triggering of downstream AI jobs** (e.g., segmentation or classification)
+%% HIGH-LEVEL BRANCHES
+A --> B{**Artifacts**}
+A --> E{**Evaluation Frameworks**}
+A --> H{**AI Tools Used**}
 
-The architecture assumes no AI processing is performed on the drone; all inference/training occurs on the HPC backend.
+%% ARTIFACT TYPES
+B --> C([**SRS Documents**])
+B --> D([**User Stories**])
 
-### 3.2 User Classes and Characteristics
+%% SRS PER PROJECT
+C --> C1([**🐾 AE – SRS**<br/>AE_SRS.ipynb])
+C --> C2([**👁️ AO-OCT – SRS**<br/>AOOCT_SRS.ipynb])
+C --> C3([**🌱 DigAg – SRS**<br/>DigAg_SRS.ipynb])
 
-| User Class      | Description                                           | Technical Proficiency                 |
-|-----------------|-------------------------------------------------------|---------------------------------------|
-| Field Operator  | Defines field bounds and launches missions            | Basic computing and drone operation   |
-| Edge Technician | Oversees edge device setup, network status            | Intermediate Linux/Python knowledge   |
-| Researcher      | Uses the images for ML training or analysis           | Advanced HPC and ML experience        |
-| System Admin    | Maintains Tapis jobs, credentials, logs, etc.         | Advanced (HPC & Networking)           |
+%% USER STORIES PER PROJECT
+D --> D1([**🐾 AE – User Stories**<br/>AE_user_stories.ipynb])
+D --> D2([**👁️ AO-OCT – User Stories**<br/>AOOCT_user_stories.ipynb])
+D --> D3([**🌱 DigAg – User Stories**<br/>DigAg_User_Stories.ipynb])
 
-### 3.3 Assumptions and Dependencies
+%% EVALUATION BRANCH
+E --> F([**SRS Metrics**<br/>Completeness, Correctness,<br/>Unambiguity, Consistency,<br/>Verifiability, Understandability])
+E --> G([**INVEST for User Stories**<br/>Independent, Negotiable,<br/>Valuable, Estimable,<br/>Small, Testable])
 
-- Edge devices run a Linux-based OS with Python 3.8+.  
-- Parrot Anafi drone supports waypoint-based missions via OpenPass.  
-- Tapis is used as the transfer and job orchestration backend.  
-- Fields are rectangular, defined by four GPS points or area bounds.  
-- Network connectivity is intermittent; uploads must be retry-safe.  
-- Image duplication is possible; deduplication is enforced.
+%% TOOLS
+H --> H1([ChatGPT 4o])
+H --> H2([Gemini 2.5 Flash])
+H --> H3([Perplexity – Comet])
+H --> H4([Claude 4.5 Sonnet])
 
----
+%% COLORS / STYLING
+style A fill:#fff2cc,stroke:#cc9900,stroke-width:2px,rx:12,ry:12
+style B fill:#f0f0f0,stroke:#666,stroke-width:1.5px,rx:10,ry:10
+style E fill:#f0f0f0,stroke:#666,stroke-width:1.5px,rx:10,ry:10
+style H fill:#f0f0f0,stroke:#666,stroke-width:1.5px,rx:10,ry:10
 
-## 4. Functional Requirements
+style C1 fill:#ffe6e6,stroke:#cc0000,stroke-width:2px,rx:12,ry:12
+style C2 fill:#e6ffe6,stroke:#009900,stroke-width:2px,rx:12,ry:12
+style C3 fill:#e6ecff,stroke:#0033cc,stroke-width:2px,rx:12,ry:12
 
-| ID    | Requirement                                                                                         |
-|-------|-----------------------------------------------------------------------------------------------------|
-| FR-1  | The system shall allow the user to input field dimensions or a set of GPS coordinates.             |
-| FR-2  | The system shall compute a rectangular waypoint grid based on input parameters (altitude, FOV, sidelap, frontlap). |
-| FR-3  | The system shall export a mission manifest compatible with OpenPass (e.g., CSV or JSON).           |
-| FR-4  | The Transfer Module shall continuously monitor a configured mission output folder.                  |
-| FR-5  | The system shall detect and batch new image files using configurable batch size and timeout.        |
-| FR-6  | The Transfer Module shall support resumable and retry-safe uploads to the configured HPC destination using Tapis APIs. |
-| FR-7  | The system shall trigger a predefined ML training/inference job after a successful image upload.    |
-| FR-8  | The system shall perform deduplication to avoid retriggering jobs for already-processed data.       |
-| FR-9  | The system shall log events, errors, and retries in structured logs for auditing and debugging.     |
-| FR-10 | The system shall validate file integrity and completeness before triggering HPC jobs.               |
-| FR-11 | The user shall be able to manually trigger retries for failed transfers.                            |
-| FR-12 | The system shall store mission metadata (flight start time, image count, area coverage) per upload session. |
-
----
-
-## 5. Non-Functional Requirements
-
-| Category        | Requirement                                                                                                  |
-|-----------------|--------------------------------------------------------------------------------------------------------------|
-| Performance     | Upload throughput must tolerate at least 50% packet loss and still complete transfer within 2× real-time capture speed. |
-| Reliability     | The system must retry failed uploads with exponential backoff and local checkpointing.                       |
-| Scalability     | Should support at least 5 parallel missions running per day without system degradation.                      |
-| Security        | All transfers must use encrypted channels (HTTPS, SFTP, or Tapis tokens); no credentials stored in plaintext.|
-| Portability     | Should run on both lightweight laptops and Intel NUCs with 8GB RAM and limited storage.                      |
-| Maintainability | Python code should follow PEP8 standards and be modular for reuse in other edge scenarios.                   |
-| Usability       | Command-line interfaces must provide clear prompts and help options; errors must be human-readable.          |
-| Fault Tolerance | Must recover from unexpected shutdowns by replaying or resuming partial transfers.                           |
-| Storage Efficiency | Local storage used for batching should not exceed 80% of disk quota; older data is purged post-successful upload. |
-
----
-
-## 6. Validation Criteria
-
-| Requirement ID | Validation Strategy                                                                                     |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| FR-1 to FR-3   | Provide test field boundaries and verify generated mission manifests via unit tests and manual map overlay. |
-| FR-4 to FR-5   | Simulate file creation in mission folder and validate detection and batching logic.                     |
-| FR-6           | Simulate upload with connection dropouts and ensure retry/recovery behavior functions as expected.      |
-| FR-7           | Log job submission and match against uploaded files for consistency.                                    |
-| FR-8           | Attempt duplicate uploads and validate job is not triggered twice.                                      |
-| FR-10          | Use corrupted or incomplete files to verify integrity checks prevent job initiation.                    |
-| FR-12          | Check metadata logs per upload session for completeness and accuracy.                                   |
-
----
-
-## 7. Appendix
-
-### 7.1 Glossary
-
-| Term           | Meaning                                                          |
-|----------------|------------------------------------------------------------------|
-| Waypoint Plan  | A set of GPS points for drones to follow                        |
-| Mission Manifest | Metadata file defining drone flight instructions              |
-| Batch Upload   | Uploading multiple files together for efficiency                |
-| Deduplication  | Avoiding repeated uploads or job submissions for the same data  |
+style D1 fill:#ffe6e6,stroke:#cc0000,stroke-width:1.5px,rx:10,ry:10
+style D2 fill:#e6ffe6,stroke:#009900,stroke-width:1.5px,rx:10,ry:10
+style D3 fill:#e6ecff,stroke:#0033cc,stroke-width:1.5px,rx:10,ry:10

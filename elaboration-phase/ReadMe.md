@@ -1,11 +1,11 @@
 # Research Elaboration Summary
 
 This folder contains the **Research Elaboration / Background / Risk-Removal Report** for our AI4SE study.  
-The document expands the inception-phase analysis through literature review, domain scans, research questions, and proposed workproducts across **Animal Ecology**, **AO-OCT**, and **Digital Agriculture**. :contentReference[oaicite:0]{index=0}
+The document expands the inception-phase analysis through literature review, domain scans, research questions, and proposed workproducts across **Animal Ecology**, **AO-OCT**, and **Digital Agriculture**.
 
 ---
 
-## Overview Diagram (Colored & Clickable)
+## Overview Diagram
 
 ```mermaid
 flowchart TD

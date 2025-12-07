@@ -1,16 +1,16 @@
 # Requirements Analysis Phase – Summary
 
 This folder contains the **Requirements Analysis Report** for our AI4SE study.  
-In this phase, we systematically explored how different AI tools can assist with core requirements artifacts—primarily **Software Requirements Specifications (SRS)** and **user stories**—across three domains: **Animal Ecology**, **AO-OCT**, and **Digital Agriculture**. :contentReference[oaicite:0]{index=0}  
+In this phase, we systematically explored how different AI tools can assist with core requirements artifacts—primarily **Software Requirements Specifications (SRS)** and **user stories**—across three domains: **Animal Ecology**, **AO-OCT**, and **Digital Agriculture**. 
 
 The report describes how a common project context and carefully structured prompts were used across tools (ChatGPT 4o, Gemini 2.5 Flash, Perplexity Comet, Claude Sonnet 4.5) to generate these artifacts, and how the results were evaluated against industry-aligned frameworks:
 
 - **SRS**: assessed on completeness, correctness, unambiguity, consistency, verifiability, and understandability, with structure aligned to IEEE-style SRS. :contentReference[oaicite:1]{index=1}  
-- **User stories**: assessed against the **INVEST** criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable). :contentReference[oaicite:2]{index=2}  
+- **User stories**: assessed against the **INVEST** criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable). 
 
-Overall, the report finds that all tools can produce structured, usable first drafts, but differ in depth, clarity, and testability. Claude tends to be the most comprehensive (especially on assumptions and validation), Gemini is concise but lighter on non-functional and security details, while ChatGPT and Perplexity often produce similar, developer-friendly layouts that still need sharpening around metrics and edge cases. :contentReference[oaicite:3]{index=3}  
+Overall, the report finds that all tools can produce structured, usable first drafts, but differ in depth, clarity, and testability. Claude tends to be the most comprehensive (especially on assumptions and validation), Gemini is concise but lighter on non-functional and security details, while ChatGPT and Perplexity often produce similar, developer-friendly layouts that still need sharpening around metrics and edge cases. 
 
-For user stories, ChatGPT and Claude usually produce clearer, outcome-focused stories; Gemini and Perplexity sometimes combine multiple goals or add fixed details that reduce negotiability. Across tools, stories are generally estimable and small, but many would benefit from more explicit user value statements and crisper acceptance criteria. :contentReference[oaicite:4]{index=4}  
+For user stories, ChatGPT and Claude usually produce clearer, outcome-focused stories; Gemini and Perplexity sometimes combine multiple goals or add fixed details that reduce negotiability. Across tools, stories are generally estimable and small, but many would benefit from more explicit user value statements and crisper acceptance criteria.
 
 ---
 

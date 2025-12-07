@@ -28,27 +28,23 @@ A small, end-to-end slice (request → validation → processing → persistence
 ## Repository structure
 
 ```
-/requirements/               # SRS and User Stories (inputs)
-/ArchitectureAndDesign/      # C4, ADRs, Use Cases, STRIDE, Sequences (by project and AI tool)
-/Implementation/             # Runnable slices (service, tests, API spec, ops, README)
-/traceability/               # RTM linking requirements ⇄ decisions ⇄ diagrams ⇄ endpoints ⇄ tests
-/prompts/                    # Exact prompts used (reproducibility)
+/requirement-phase/               # SRS and User Stories (inputs)
+/architecture-design-phase/      # C4, ADRs, Use Cases, STRIDE, Sequences (by project and AI tool)
+/implementation-phase/             # Runnable slices (service, tests, API spec, ops, README)
+/elaboration-phase/               # Elaboration of problem statement .
+/inception-phase/                    # Incepting the research objectives .
 ```
 
-Each **project** (e.g., `AnimalEcology`, `AOOCT`) has its own subfolder under `ArchitectureAndDesign/` and `Implementation/`.
-Inside each project, artifacts are grouped by **AI tool** (ChatGPT, Claude, Gemini, etc.) with files numbered in reading order:
-`01-context`, `02-container`, `03-adrs`, `04-usecases`, `05-stride`, `06-sequences`, `07-rtm.csv`.
-
+Each **phase** (e.g., `requirement-phase`, `architecture-design-phase`) has its own subfolders for all the three test subjects (e.g., `animal-ecology`, `digital-agriclture`, `ao-oct`) containing individual artifacts.
 ---
 
 ## How to read this repo (quick path)
 
-1. **Start with inputs** → open `/requirements/` to see what the system must do.
-2. **Understand the blueprint** → in `/ArchitectureAndDesign/<Project>/<Tool>/`, read in order:
+1. **Start with inputs** → open `/requirement-phase/` to see what the system must do.
+2. **Understand the blueprint** → in `/architecture-design-phase/<project>/`, read in order:
    `01 Context` → `02 Container` → `03 ADRs` → `04 Use Cases` → `05 STRIDE` → `06 Sequences`.
-3. **Run the slice** → open `/Implementation/<Project>/<Tool>/README.md` and follow **Quickstart**
-   (one command to run, sample `curl` calls, one command to test).
-4. **Verify links** → use `/traceability/rtm.csv` to jump from a requirement ID to the related ADRs, diagrams, endpoints, and tests.
+3. **Implementation code base** → Check `/implementation-phase/<project>`
+4. **Verify links** → use `/architecture-design-phase/<>project/rtm.csv` to jump from a requirement ID to the related ADRs, diagrams, endpoints, and tests.
 5. **Compare AI tools** → open the same numbered file (e.g., `03-adrs.md`) across tool folders.
 
 ---
@@ -92,6 +88,6 @@ Inside each project, artifacts are grouped by **AI tool** (ChatGPT, Claude, Gemi
 ## Where to start
 
 * Repo home: [https://github.com/GautamMg/AI4SE](https://github.com/GautamMg/AI4SE)
-* Quick tour: read `/requirements/`, then one project under `/ArchitectureAndDesign/`, then run its slice in `/Implementation/`
+* Quick tour: read `/requirement-phase/`, then one project under `/architecture-design-phase/`, then run its slice in `/Implementation/`
 
 That’s the whole story: requirements in, architecture & design to clarify, a small runnable slice to prove the path, and simple metrics so we know it’s working.

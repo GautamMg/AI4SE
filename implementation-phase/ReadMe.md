@@ -1,83 +1,99 @@
 # Implementation Phase — Summary
 
-This folder contains the **Implementation Phase Report**, the stage where the project moves from architectural design to **running, testable software**.  
-Using the approved Project Context, SRS, User Stories, and Architecture & Design workproducts, this phase produces a small but complete implementation slice that demonstrates end-to-end functionality. :contentReference[oaicite:0]{index=0}
+This folder contains the **Implementation Phase Report**, where the project transitions from architecture and requirements into an executable, testable software slice.  
+Using the approved SRS, User Stories, and Architecture & Design artifacts, this phase produces a minimal but complete implementation demonstrating end-to-end functionality. :contentReference[oaicite:0]{index=0}
 
-The aim is to convert “what and why” into **code that runs, passes tests, follows architectural constraints, and can be extended safely**.
-
----
-
-## Objectives of the Implementation Phase
-
-- Implement a **minimal but real service**, covering:
-  - request → validation → processing → persistence → response  
-- Ensure **traceability** from requirements to code, tests, and decisions  
-- Validate that architectural workproducts can drive consistent implementation  
-- Produce runnable artifacts (code, Dockerfile, tests, README, OpenAPI)  
-- Evaluate how well AI tools support actual implementation tasks  
-- Identify risks, gaps, and fidelity issues introduced during coding  
+The objective is to validate that the architecture is implementable, the requirements are actionable, and the system behaves consistently across the selected stories and workflows.
 
 ---
 
-## Tools Used in This Phase
+## Goals of the Implementation Phase
 
-According to the report, two AI-assisted tools were used: :contentReference[oaicite:1]{index=1}  
+- Convert key user stories into **running code**  
+- Ensure **traceability** from requirements → architecture → code → tests  
+- Validate the architecture by implementing the chosen flows  
+- Produce executable artifacts (code, contracts, tests, Docker setup)  
+- Evaluate how well AI tools support real implementation tasks  
+- Identify fidelity gaps, risks, and inconsistencies that emerge during coding
+
+---
+
+## Tools Used
+
+The phase uses two AI-assisted coding tools:  
+:contentReference[oaicite:1]{index=1}
 
 - **ChatGPT**  
 - **GitHub Copilot**
 
-Both were guided by:
+Both tools operate using the same authoritative inputs:
 
 - SRS (IEEE-aligned)  
-- INVEST-checked User Stories  
+- User Stories (INVEST-evaluated)  
 - C4 diagrams  
-- Architecture Decision Records (ADRs)  
-- STRIDE threat model  
-- Sequence Diagrams  
+- Architecture Decision Records  
+- STRIDE threat analysis  
+- Sequence diagrams  
 
 ---
 
-## Methodology (End-to-End Implementation Pipeline)
+## Implementation Methodology
 
-The implementation followed the steps below: :contentReference[oaicite:2]{index=2}  
+The Implementation Phase follows the structured steps below:  
+:contentReference[oaicite:2]{index=2}
 
-1. Map SRS + User Stories → build plan (select 3 stories)  
-2. Build service skeletons that mirror **C4 containers**  
-3. Generate authoritative **OpenAPI contracts**  
-4. Implement flows from sequence diagrams (success, retry, error paths)  
-5. Apply STRIDE-driven controls (auth, limits, logging)  
-6. Run simple performance smoke checks (latency, throughput)  
-7. Maintain traceability through commits, filenames, and IDs  
+1. Select three User Stories and justify the selection  
+2. Build an implementation plan mapped to the C4 Containers  
+3. Generate **OpenAPI contracts** and schemas  
+4. Implement endpoints, validation, processing, security, and persistence  
+5. Follow the Sequence Diagrams (success and error paths)  
+6. Apply STRIDE-driven mitigations (logging, authentication, limits)  
+7. Write tests covering contracts, scenarios, retries, and errors  
+8. Run quick performance checks  
+9. Produce a traceability CSV linking requirements to code and tests
 
 ---
 
-## High-Level Implementation Workflow (Detailed Diagram)
+## Implementation Workflow (Diagram)
 
 ```mermaid
 flowchart TD
 
-subgraph Inputs[Inputs]
+subgraph Inputs
     Ctx[Project Context]
     SRS[SRS]
     Stories[User Stories]
-    Arch[C4, ADRs, STRIDE, Sequences]
+    Arch[Architecture Artifacts]
 end
 
-subgraph AI[AI-Assisted Coding Tools]
+subgraph AI_Tools
     GPT[ChatGPT]
     Copilot[GitHub Copilot]
 end
 
-subgraph Impl[Implementation Pipeline]
-    Select[Select 3 User Stories]
-    Plan[Build Plan Mapping to Containers]
-    API[OpenAPI/Contracts]
-    Code[Service Code\n(handlers, services, models)]
-    Persist[SQLite or In-Memory Persistence]
-    Sec[Security + Logging\n(from STRIDE)]
-    Tests[Contract + Scenario Tests]
-    Perf[Quick Performance Check]
+subgraph Pipeline
+    Select[Select User Stories]
+    Plan[Build Plan]
+    API[OpenAPI Contracts]
+    Code[Service Code]
+    Persist[Persistence Layer]
+    Sec[Security and Logging]
+    Tests[Test Suite]
+    Perf[Performance Check]
     Trace[Traceability Matrix]
 end
 
-Inputs --> AI --> Select --> Plan --> API --> Code --> Persist --> Sec --> Tests --> Perf --> Trace
+Ctx --> GPT
+SRS --> GPT
+Stories --> GPT
+Arch --> GPT
+
+Ctx --> Copilot
+SRS --> Copilot
+Stories --> Copilot
+Arch --> Copilot
+
+GPT --> Select
+Copilot --> Select
+
+Select --> Plan --> API --> Code --> Persist --> Sec --> Tests --> Perf --> Trace
